@@ -30,7 +30,7 @@ export default function DesktopItem({
         )}
         href={href}
       >
-        <Icon classname='h-6 w-6 shrink-0' />
+        <Icon className='h-6 w-6 shrink-0' />
         <span className='sr-only'>{label}</span>
       </Link>
     </li>
