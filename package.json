@@ -13,7 +13,8 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "format": "prettier -w \"./**/*.{ts,tsx}\"",
-    "format:check": "prettier -c \"./**/*.{ts,tsx}\""
+    "format:check": "prettier -c \"./**/*.{ts,tsx}\"",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
