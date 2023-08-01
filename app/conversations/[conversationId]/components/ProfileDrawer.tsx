@@ -9,6 +9,8 @@ import { format } from 'date-fns';
 import React, { Fragment, useMemo, useState } from 'react';
 import { IoClose, IoTrash } from 'react-icons/io5';
 import ConfirmModal from './ConfirmModal';
+import AvatarGroup from '@/app/components/AvatarGroup';
+import useActiveList from '@/app/hooks/useActiveList';
 interface ProfileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
@@ -31,11 +33,13 @@ export default function ProfileDrawer({
     return data.name || otherUser?.name;
   }, [data.name, otherUser?.name]);
 
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
   const statusText = useMemo(() => {
     if (data.isGroup) {
       return `${data.users.length} members`;
     }
-    return 'Active';
+    return isActive ? 'Active' : 'Offline';
   }, [data]);
 
   return (
@@ -89,7 +93,11 @@ export default function ProfileDrawer({
                       <div className='relative mt-6 flex-1 px-4 sm:px-6'>
                         <div className='flex flex-col items-center'>
                           <div className='mb-2'>
-                            <Avatar user={otherUser} />
+                            {data.isGroup ? (
+                              <AvatarGroup users={data.users} />
+                            ) : (
+                              <Avatar user={otherUser} />
+                            )}
                           </div>
                           <div>{title}</div>
                           <div className='text-sm text-gray-500'>
@@ -137,6 +145,7 @@ export default function ProfileDrawer({
                                   </dd>
                                 </div>
                               )}
+
                               {!data.isGroup && (
                                 <div>
                                   <dt
